@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qmldir</file>
+        <file>Player.qml</file>
+        <file>Style.qml</file>
+        <file>GameBoardCell.qml</file>
+        <file>Header.qml</file>
+        <file>GameBoard.qml</file>
+        <file>ListViewDelegate.qml</file>
+        <file>GameMenuView.qml</file>
+        <file>GameView.qml</file>
+    </qresource>
+</RCC>
