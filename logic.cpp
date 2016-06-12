@@ -172,7 +172,7 @@ bool is_winner(BoardStateVector *b ){
 
         winningState7->insert(0);
         winningState7->insert(4);
-        winningState7->insert(9);
+        winningState7->insert(8);
 
         winningState8->insert(2);
         winningState8->insert(4);
