@@ -3,8 +3,7 @@
 
 #include <QObject>
 #include <QQuickItem>
-
-namespace GameLogic{
+#include <memory>
 
 enum Player {
     player_x, player_o, empty
@@ -30,22 +29,25 @@ public slots:
 
 private:
     Player current_player;
-    Player winner;
-    BoardStateVector gameBoardState;
+
+    std::unique_ptr <BoardStateVector> gameBoardState;
+
+
+
+    std::unique_ptr<QVector<BoardStateSet>> winning_states;
 
     std::map<Player, QString > player_string;
     bool m_isVictory;
     bool isGameRunning;
-    bool is_winner(BoardStateVector *b );
 
     void startGame();
     void pauseGame();
 
-    bool isVictory() const {
-        return m_isVictory;
-    }
+    std::unique_ptr<BoardStateSet> boardVectorToSet(const BoardStateVector *b);
+
+    bool isWinner(const BoardStateVector &board);
+    bool isVictory() const;
 };
 
-}
 
 #endif // LOGIC_H

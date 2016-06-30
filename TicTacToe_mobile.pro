@@ -2,7 +2,7 @@ TEMPLATE = app
 
 QT += qml quick
 
-CONFIG += c++14
+CONFIG += c++14 -Wall
 
 SOURCES += main.cpp \
     logic.cpp

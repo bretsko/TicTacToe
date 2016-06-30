@@ -44,7 +44,6 @@ Item {
 
     Rectangle {
         id:line
-        color:transparent
         opacity: 0.3
         radius: height/4
         border.color: "black"

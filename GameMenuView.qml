@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.2
 import "."
 
 Item {
-    // anchors.fill: parent
-    //anchors.centerIn: parent
 
     anchors.horizontalCenter: parent.horizontalCenter
 
@@ -16,7 +14,6 @@ Item {
         ListElement {
             title: "New game"
             page: "GameView.qml"
-            name: "New game"
         }
 
         ListElement {
@@ -32,10 +29,7 @@ Item {
         }
 
         ListElement {
-            title: "New game"
-        }
-
-        ListElement {
+            // id:quit
             title: "Quit"
         }
     }
@@ -59,7 +53,16 @@ Item {
                 delegate: ListViewDelegate {
                     text: title
                     onClicked: {
-                        stackView.push(Qt.resolvedUrl(page))
+                        switch (title){
+                        case "New game":{
+                            stackView.push(Qt.resolvedUrl(page));
+                            break;
+                        }
+                        case "Quit":{
+                            Qt.quit();
+                            break;
+                        }
+                        }
                     }
                 }
             }

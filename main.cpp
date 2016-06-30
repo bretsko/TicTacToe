@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    GameLogic::Logic logic;
+    Logic logic;
     engine.rootContext()->setContextProperty("Logic", &logic);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
