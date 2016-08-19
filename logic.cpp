@@ -1,23 +1,30 @@
 #include "logic.h"
 
-Logic::Logic(QObject *parent) : QObject(parent),gameBoardState(std::make_unique<BoardStateVector>(9,empty)),current_player(player_o)
+Logic::Logic(QObject *parent) : QObject(parent),gameBoardState(BoardStateVector(9,empty)),current_player(player_o)
 {
     using namespace std;
 
     player_string = { {player_x, "X"},{player_o, "O"},{empty,"EMPTY"}};
 
     //initializing the winning states vector
-    auto winningState1 = make_unique<BoardStateSet> (BoardStateSet({0,1,2}));
-    auto winningState2 = make_unique<BoardStateSet> (BoardStateSet({3,4,5}));
-    auto winningState3 = make_unique<BoardStateSet> (BoardStateSet({6,7,8}));
-    auto winningState4 = make_unique<BoardStateSet> (BoardStateSet({0,3,6}));
-    auto winningState5 = make_unique<BoardStateSet> (BoardStateSet({1,4,7}));
-    auto winningState6 = make_unique<BoardStateSet> (BoardStateSet({2,5,8}));
-    auto winningState7 = make_unique<BoardStateSet> (BoardStateSet({0,4,8}));
-    auto winningState8 = make_unique<BoardStateSet> (BoardStateSet({2,4,6}));
+    BoardStateSet winningState1({0,1,2});
+    BoardStateSet winningState2({3,4,5});
+    BoardStateSet winningState3({6,7,8});
+    BoardStateSet winningState4({0,3,6});
+    BoardStateSet winningState5({1,4,7});
+    BoardStateSet winningState6({2,5,8});
+    BoardStateSet winningState7({0,4,8});
+    BoardStateSet winningState8({2,4,6});
 
-    winning_states = make_unique<QVector<BoardStateSet>>( QVector<BoardStateSet>({*winningState1,*winningState2,*winningState3,*winningState4,*winningState5,*winningState6,*winningState7,*winningState8})
-                                                          );
+    winning_states = QVector<BoardStateSet>({   winningState1,
+                                                winningState2,
+                                                winningState3,
+                                                winningState4,
+                                                winningState5,
+                                                winningState6,
+                                                winningState7,
+                                                winningState8 });
+
     m_isVictory = false;
     isGameRunning = true;
     Logic::current_player = player_o;
@@ -50,8 +57,8 @@ bool Logic::isVictory() const {
 void Logic::restartGame(){
     //if(isGameRunning){
     for (int i = 0;i < 9; ++i){
-        if (gameBoardState->at(i) != empty) {
-            (*gameBoardState)[i]  = empty;
+        if (gameBoardState.at(i) != empty) {
+            (gameBoardState)[i]  = empty;
         }
     }
     // }
@@ -66,9 +73,9 @@ QString Logic:: makeMove(int idx){
     QString player_move(player_string[empty]);
 
     if (current_player == player_o){
-        (*gameBoardState)[idx] = player_o;
+        (gameBoardState)[idx] = player_o;
 
-        if(isWinner(*gameBoardState)){
+        if(isWinner(gameBoardState)){
             m_isVictory = true;
         }
         current_player = player_x;
@@ -76,9 +83,9 @@ QString Logic:: makeMove(int idx){
 
     }else if(current_player == player_x){
 
-        (*gameBoardState)[idx] = player_x;
+        (gameBoardState)[idx] = player_x;
 
-        if(isWinner(*gameBoardState)){
+        if(isWinner(gameBoardState)){
             m_isVictory = true;
         }
 
@@ -101,11 +108,11 @@ bool Logic::isWinner(const BoardStateVector &board){
         }
     }
 
-    std::unique_ptr<BoardStateSet> boardSet (boardVectorToSet(&board_player));
+    BoardStateSet boardSet (boardVectorToSet(&board_player));
     //(boardVectorToSet(std::move(&board_player)));
 
     for (int i = 0;i < 8; i++){
-        if(boardSet->contains(winning_states->at(i)))
+        if(boardSet.contains(winning_states.at(i)))
             return true;
     }
 
@@ -113,20 +120,20 @@ bool Logic::isWinner(const BoardStateVector &board){
 }
 
 
-std::unique_ptr<BoardStateSet> Logic::boardVectorToSet(const BoardStateVector *b){
+BoardStateSet Logic::boardVectorToSet(const BoardStateVector *b){
 
-    auto boardSet = std::make_unique<BoardStateSet> (BoardStateSet());
+    BoardStateSet boardSet;
 
     for (int i = 0;i < 9; ++i){
         if( b->at(i)!= empty){
-            boardSet->insert(i);
+            boardSet.insert(i);
         }
     }
     return boardSet;
 }
 
 bool Logic:: isValidMove(int idx){
-    if (gameBoardState->at(idx) == empty ){
+    if (gameBoardState.at(idx) == empty ){
         return true;
     }  else return false;
 }

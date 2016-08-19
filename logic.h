@@ -30,11 +30,9 @@ public slots:
 private:
     Player current_player;
 
-    std::unique_ptr <BoardStateVector> gameBoardState;
+    BoardStateVector gameBoardState;
 
-
-
-    std::unique_ptr<QVector<BoardStateSet>> winning_states;
+    QVector<BoardStateSet> winning_states;
 
     std::map<Player, QString > player_string;
     bool m_isVictory;
@@ -43,7 +41,7 @@ private:
     void startGame();
     void pauseGame();
 
-    std::unique_ptr<BoardStateSet> boardVectorToSet(const BoardStateVector *b);
+    BoardStateSet boardVectorToSet(const BoardStateVector *b);
 
     bool isWinner(const BoardStateVector &board);
     bool isVictory() const;
